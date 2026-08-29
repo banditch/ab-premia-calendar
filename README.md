@@ -4,50 +4,31 @@ Calendarios iCalendar suscribibles para los equipos de Agrupació Bàsquet Premi
 
 ## Estado
 
-El generador, la web y la automatización de GitHub Actions están preparados. Para obtener datos reales falta configurar el endpoint público de horarios utilizado por la aplicación oficial de Bàsquet Català.
+El proyecto está conectado a los servicios públicos utilizados por la aplicación oficial de Bàsquet Català. No necesita tokens personales ni secretos.
 
 ## Cómo funciona
 
-1. `src/generate.py` lee partidos normalizados desde `data/matches.json` o desde `DATA_URL`.
-2. Genera un archivo `.ics` estable por equipo dentro de `docs/calendars/`.
-3. Genera `docs/calendars/index.json` para alimentar el selector web.
-4. GitHub Actions ejecuta el proceso cada hora y publica GitHub Pages.
+1. Obtiene la configuración pública actual de la app oficial.
+2. Consulta los equipos del club `16`.
+3. Consulta el calendario completo de cada `idSignedTeam`.
+4. Genera un archivo `.ics` por equipo en `docs/calendars/`.
+5. GitHub Actions actualiza los calendarios cada hora.
+6. GitHub Pages publica el selector para Apple Calendar y Google Calendar.
 
-## Formato de entrada
+Los nombres de archivo se basan en categoría y código de equipo, no en el identificador anual, para que las suscripciones puedan mantenerse entre temporadas.
 
-```json
-[
-  {
-    "id": "partido-123",
-    "date": "2026-09-12",
-    "time": "10:45",
-    "home_team": "AB PREMIÀ BLAU",
-    "away_team": "CB EXEMPLE",
-    "home_team_id": "ab-premia-blau",
-    "away_team_id": "cb-exemple",
-    "category": "MINI MASCULÍ",
-    "venue": "PAV. MUNICIPAL PREMIÀ DE MAR",
-    "address": "Camí del Mig, 62",
-    "status": "scheduled"
-  }
-]
-```
+## Activación
 
-Los equipos del club se detectan mediante `config/settings.json`. Si la API devuelve identificadores estables, añade sus identificadores a `club_team_ids`.
+1. Abre **Settings → Actions → General → Workflow permissions**.
+2. Selecciona **Read and write permissions** y guarda.
+3. Abre **Settings → Pages → Build and deployment**.
+4. Selecciona **GitHub Actions** como fuente.
+5. Ejecuta manualmente **Actualizar calendarios**.
+6. Ejecuta manualmente **Publicar GitHub Pages** si no se inicia automáticamente.
 
-## Configuración de la fuente
+La página estará disponible en:
 
-Cuando se identifique el endpoint público de la app:
-
-1. Guarda su URL como secreto de Actions llamado `DATA_URL`.
-2. Si su JSON no coincide con el formato anterior, adapta únicamente `normalize_payload()` en `src/generate.py`.
-3. Ejecuta manualmente el workflow **Actualizar calendarios**.
-
-No guardes tokens personales ni credenciales de usuario en el repositorio.
-
-## Publicar la web
-
-En GitHub abre **Settings → Pages → Build and deployment → GitHub Actions**. El workflow **Publicar GitHub Pages** desplegará el selector.
+https://banditch.github.io/ab-premia-calendar/
 
 Cada calendario tendrá una URL permanente:
 
@@ -63,3 +44,7 @@ python -m http.server 8000 --directory docs
 ```
 
 Abre http://localhost:8000.
+
+## Privacidad
+
+El proyecto consulta únicamente los endpoints públicos de clubes, equipos y partidos utilizados por la app oficial. No almacena credenciales, convocatorias ni datos personales.
