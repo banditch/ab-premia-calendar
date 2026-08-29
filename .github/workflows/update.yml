@@ -1,4 +1,4 @@
-name: Actualizar calendarios
+name: Actualizar y publicar calendarios
 
 on:
   workflow_dispatch:
@@ -7,13 +7,18 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
-  group: update-calendars
+  group: update-and-publish-calendars
   cancel-in-progress: false
 
 jobs:
   update:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,3 +34,10 @@ jobs:
           git add docs/calendars
           git diff --cached --quiet || git commit -m "Actualizar calendarios"
           git push
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Publicar GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
