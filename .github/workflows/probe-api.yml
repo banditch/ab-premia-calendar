@@ -1,0 +1,27 @@
+name: Probar API de Bàsquet Català
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probar rutas públicas
+        env:
+          FCBQ_API_BASE: ${{ secrets.FCBQ_API_BASE }}
+          FCBQ_CLUB_ID: "16"
+        run: python tools/probe_api.py > api-report.json
+      - name: Guardar informe
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-report
+          path: api-report.json
+          retention-days: 7
