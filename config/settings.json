@@ -1,0 +1,12 @@
+{
+  "calendar_name": "AB Premià",
+  "timezone": "Europe/Madrid",
+  "default_duration_minutes": 90,
+  "club_name_patterns": [
+    "AB PREMIÀ",
+    "AB PREMIA",
+    "AGRUPACIO BASQUET PREMIA",
+    "AGRUPACIÓ BÀSQUET PREMIÀ"
+  ],
+  "club_team_ids": []
+}
