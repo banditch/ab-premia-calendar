@@ -5,7 +5,8 @@ import urllib.error
 import urllib.request
 
 CONFIG_URL = "https://dsmulti-fcbq-public.optimalwayconsulting.com/public/app/config?version=25.10.31&federation=fcbq"
-CLUB_ID = "16"
+TEAM_ID = "89527"
+PLAYOFF_ID = "83687"
 TIMEOUT = 20
 HEADERS = {"Accept": "application/json", "User-Agent": "Bàsquet Català/25.10.31"}
 
@@ -52,20 +53,20 @@ def call(base, path):
 
 def main():
     base = get_api_base()
-    paths = [
-        f"Team/getTeamsFromClub/{CLUB_ID}",
-        f"Team/getTeamsFromClub/{CLUB_ID}/2025",
-        f"Match/getAllMatchInLiveVisibleWebByClub/{CLUB_ID}",
-        f"Match/getMatchClubMonth/{CLUB_ID}/8",
-        f"Match/getMatchClubMonth/{CLUB_ID}/08",
-        f"Match/getMatchClubMonth/{CLUB_ID}/8/2026",
-        f"Match/getMatchClubMonth/{CLUB_ID}/08/2026",
-        f"Match/getMatchClubMonth/{CLUB_ID}/2026/8",
-        f"Match/getMatchClubMonth/{CLUB_ID}/2026/08",
-    ]
+    ids = (TEAM_ID, PLAYOFF_ID)
+    paths = []
+    for team_id in ids:
+        paths.extend([
+            f"Match/getMatchTeam/{team_id}",
+            f"Match/getByTeamAndMonth/{team_id}/8/2026",
+            f"Match/getByTeamAndMonth/{team_id}/08/2026",
+            f"Match/getByTeamAndMonth/{team_id}/2026/8",
+            f"Match/getByTeamAndMonth/{team_id}/2026/08",
+            f"Match/getAllMatchInLiveVisibleWebByTeam/{team_id}",
+        ])
     results = [call(base, path) for path in paths]
-    json.dump({"api_base": base, "club_id": CLUB_ID, "results": results},
-              sys.stdout, ensure_ascii=False, indent=2)
+    json.dump({"api_base": base, "team_id": TEAM_ID, "playoff_id": PLAYOFF_ID,
+               "results": results}, sys.stdout, ensure_ascii=False, indent=2)
     print()
 
 
