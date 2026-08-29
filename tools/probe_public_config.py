@@ -5,11 +5,11 @@ import urllib.request
 
 HOST = "https://dsmulti-fcbq-public.optimalwayconsulting.com"
 PATHS = [
+    "/public/app/config?version=25.10.31&federation=fcbq",
+    "/public/app/config?federation=fcbq&version=25.10.31",
+    "/public/app/config?version=25.10.31&federation=FCBQ",
+    "/public/app/config?version=25.10.31&federation=1",
     "/public/app/config?version=25.10.31",
-    "/app/config?version=25.10.31",
-    "/public/notifications/app/config?version=25.10.31",
-    "/public/app/config?version=56",
-    "/public/app/config",
 ]
 
 
