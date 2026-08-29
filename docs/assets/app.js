@@ -61,7 +61,9 @@ async function renderSettings(){
       const filtered=teams.filter(team=>team.name.toLowerCase().includes(query.toLowerCase()));
       list.innerHTML=filtered.map(team=>'<label class="team-option"><input type="checkbox" value="'+team.slug+'" '+(favourites.includes(team.slug)?"checked":"")+' '+(team.matches===0?"disabled":"")+'><span><strong>'+team.name+'</strong><small>'+(team.matches?"Calendario publicado":"Pendiente de partidos")+'</small></span><span class="count">'+team.matches+'</span></label>').join("");
       list.querySelectorAll("input:not(:disabled)").forEach(input=>input.addEventListener("change",()=>{
-        favourites=[...list.querySelectorAll("input:checked")].map(box=>box.value);
+        const selected=new Set(favourites);
+        if(input.checked)selected.add(input.value);else selected.delete(input.value);
+        favourites=[...selected];
         setFavourites(favourites);status.textContent="Preferencias guardadas";setTimeout(()=>status.textContent="",1800);
       }));
     }
