@@ -41,23 +41,45 @@ const team = document.querySelector("#team");
 const apple = document.querySelector("#apple");
 const google = document.querySelector("#google");
 const status = document.querySelector("#status");
-function selectTeam(){
-  if(!team.value) return;
-  const httpUrl = new URL("calendars/" + team.value + ".ics", location.href).href;
-  apple.href = httpUrl.replace(/^https?:/, "webcal:");
-  google.href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(httpUrl);
-  apple.classList.remove("disabled"); google.classList.remove("disabled");
+
+function disableActions(message=""){
+  apple.classList.add("disabled");
+  google.classList.add("disabled");
+  apple.removeAttribute("href");
+  google.removeAttribute("href");
+  status.textContent = message;
 }
+
+function selectTeam(){
+  if(!team.value){
+    disableActions("");
+    return;
+  }
+  const httpUrl = new URL("calendars/" + team.value + ".ics", location.href).href;
+  const webcalUrl = httpUrl.replace(/^https?:/, "webcal:");
+  apple.href = webcalUrl;
+  google.href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcalUrl);
+  apple.classList.remove("disabled");
+  google.classList.remove("disabled");
+  status.textContent = "Suscripción disponible. El calendario se actualizará automáticamente.";
+}
+
 fetch("calendars/index.json", {cache:"no-store"}).then(r=>r.json()).then(items=>{
   team.innerHTML = '<option value="">Selecciona un equipo</option>';
+  items.sort((a,b)=>(b.matches>0)-(a.matches>0) || a.name.localeCompare(b.name, "es"));
   items.forEach(item=>{
-    const option=document.createElement("option"); option.value=item.slug;
-    option.textContent=item.name + " (" + item.matches + " partidos)"; team.appendChild(option);
+    const option=document.createElement("option");
+    option.value=item.slug;
+    option.disabled=item.matches===0;
+    option.textContent=item.matches
+      ? item.name + " (" + item.matches + " partidos)"
+      : item.name + " (pendiente de calendario)";
+    team.appendChild(option);
   });
-  status.textContent = items.length ? "" : "Aún no hay equipos publicados: falta conectar la fuente de partidos.";
+  disableActions(items.length ? "Los equipos desactivados aún no tienen partidos publicados." : "Aún no hay equipos publicados.");
 }).catch(()=>{
   team.innerHTML='<option value="">No se pudieron cargar los equipos</option>';
-  status.textContent="Inténtalo de nuevo dentro de unos minutos.";
+  disableActions("Inténtalo de nuevo dentro de unos minutos.");
 });
 team.addEventListener("change", selectTeam);
 </script>
