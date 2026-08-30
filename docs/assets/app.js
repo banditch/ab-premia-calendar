@@ -100,6 +100,10 @@ async function renderSettings(){
     draw();search.addEventListener("input",()=>draw(search.value));
   }catch(error){list.innerHTML='<div class="empty"><h2>Error</h2><p>'+error.message+'</p></div>'}
 }
-if(page==="home")renderHome();
-if(page==="calendar")renderCalendar();
-if(page==="settings")renderSettings();
+function initPage(){
+  if(page==="home")renderHome();
+  if(page==="calendar")renderCalendar();
+  if(page==="settings")renderSettings();
+}
+initPage();
+window.addEventListener("pageshow",event=>{if(event.persisted)initPage()});
