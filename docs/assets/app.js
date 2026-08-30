@@ -70,7 +70,7 @@ async function renderCalendar(){
       target.innerHTML='<div class="month-calendar"><div class="calendar-head"><button class="month-button" id="prev-month" aria-label="Mes anterior">‹</button><div class="calendar-title">'+monthName(visible)+'</div><button class="month-button" id="next-month" aria-label="Mes siguiente">›</button></div><div class="weekdays"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div><div class="month-grid">'+days.map(day=>{
         const key=dateKey(day),dayGames=byDay.get(key)||[];
         const classes=["calendar-day",day.getMonth()!==month?"other":"",key===dateKey(now)?"today":"",key===selected?"selected":"",dayGames.length?"has-games":""].filter(Boolean).join(" ");
-        const dots=dayGames.length?'<span class="event-dots">'+dayGames.slice(0,3).map(()=>'<i class="event-dot"></i>').join("")+'</span>'+(dayGames.length>3?'<span class="event-more">+'+(dayGames.length-3)+'</span>'):"";
+        const dots=dayGames.length?'<span class="event-dots">'+dayGames.slice(0,3).map(()=>'<i class="event-dot"></i>').join("")+'</span>'+(dayGames.length>3?'<span class="event-more">+'+(dayGames.length-3)+'</span>':""):"";
         return '<button class="'+classes+'" data-date="'+key+'" aria-label="'+longDate(day)+(dayGames.length?", "+dayGames.length+" partidos":"")+'"><span class="day-number">'+day.getDate()+'</span>'+dots+'</button>';
       }).join("")+'</div></div><div id="selected-day" class="selected-day"></div>';
       const detail=target.querySelector("#selected-day");
