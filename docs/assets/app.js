@@ -84,9 +84,19 @@ async function renderCalendar(){
   }catch(error){target.innerHTML=emptyState("No se pudo cargar el calendario",error.message)}
 }
 async function renderSettings(){
-  const list=document.querySelector("#team-list"),search=document.querySelector("#team-search"),status=document.querySelector("#save-status");
+  const list=document.querySelector("#team-list"),search=document.querySelector("#team-search"),status=document.querySelector("#save-status"),subscriptions=document.querySelector("#subscription-list");
   try{
     const teams=await getTeams();let favourites=getFavourites();
+    function drawSubscriptions(){
+      const followed=teams.filter(team=>favourites.includes(team.slug)&&team.matches>0);
+      if(!followed.length){subscriptions.innerHTML='<div class="subscription-empty">Selecciona un equipo con partidos publicados para añadirlo a Apple o Google Calendar.</div>';return}
+      subscriptions.innerHTML=followed.map(team=>{
+        const icsUrl=new URL(BASE+"calendars/"+team.slug+".ics",window.location.origin).href;
+        const appleUrl=icsUrl.replace(/^https?:/,"webcal:");
+        const googleUrl="https://calendar.google.com/calendar/r?cid="+encodeURIComponent(icsUrl);
+        return '<article class="subscription-card"><strong>'+team.name+'</strong><div class="subscription-actions"><a class="calendar-button apple" href="'+appleUrl+'"><span></span> Apple</a><a class="calendar-button google" href="'+googleUrl+'" target="_blank" rel="noopener"><span>G</span> Google</a></div></article>';
+      }).join("");
+    }
     function draw(query=""){
       const filtered=teams.filter(team=>team.name.toLowerCase().includes(query.toLowerCase()));
       list.innerHTML=filtered.map(team=>'<label class="team-option"><input type="checkbox" value="'+team.slug+'" '+(favourites.includes(team.slug)?"checked":"")+' '+(team.matches===0?"disabled":"")+'><span><strong>'+team.name+'</strong><small>'+(team.matches?"Calendario publicado":"Pendiente de partidos")+'</small></span><span class="count">'+team.matches+'</span></label>').join("");
@@ -94,10 +104,10 @@ async function renderSettings(){
         const selected=new Set(favourites);
         if(input.checked)selected.add(input.value);else selected.delete(input.value);
         favourites=[...selected];
-        setFavourites(favourites);status.textContent="Preferencias guardadas";setTimeout(()=>status.textContent="",1800);
+        setFavourites(favourites);drawSubscriptions();status.textContent="Preferencias guardadas";setTimeout(()=>status.textContent="",1800);
       }));
     }
-    draw();search.addEventListener("input",()=>draw(search.value));
+    draw();drawSubscriptions();search.addEventListener("input",()=>draw(search.value));
   }catch(error){list.innerHTML='<div class="empty"><h2>Error</h2><p>'+error.message+'</p></div>'}
 }
 function initPage(){
