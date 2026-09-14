@@ -133,9 +133,9 @@ def club_sides(match):
         if is_club_team(name, team_id):
             catalog = TEAM_CATALOG.get(team_id)
             if catalog:
-                sides.append((catalog["key"], catalog["label"]))
+                sides.append((catalog["key"], catalog["label"], catalog["club"]))
             else:
-                sides.append((team_id or slugify(name), name))
+                sides.append((team_id or slugify(name), name, ""))
     return sides
 
 
@@ -206,12 +206,10 @@ def main():
         teams[slug]["club"] = entry["club"]
 
     for match in matches:
-        for team_key_value, team_name in club_sides(match):
+        for team_key_value, team_name, club_name in club_sides(match):
             slug = slugify(team_key_value)
             teams[slug]["name"] = team_name
-            catalog = TEAM_CATALOG.get(str(match.get("home_team_id") or "")) or TEAM_CATALOG.get(str(match.get("away_team_id") or ""))
-            if catalog:
-                teams[slug]["club"] = catalog["club"]
+            teams[slug]["club"] = club_name
             teams[slug]["matches"].append(match)
 
     for old_file in OUTPUT.glob("*.ics"):
