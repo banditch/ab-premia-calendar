@@ -2,6 +2,12 @@ name: Actualizar y publicar calendarios
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "config/**"
+      - ".github/workflows/update.yml"
   schedule:
     - cron: "17 * * * *"
 
