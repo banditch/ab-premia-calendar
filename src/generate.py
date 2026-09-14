@@ -3,6 +3,7 @@ import json
 import re
 import unicodedata
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -91,11 +92,16 @@ def fetch_payload():
             }
 
     matches = {}
-    for team_id in TEAM_CATALOG:
-        for item in api_data(base, f"Match/getMatchTeam/{team_id}"):
-            match = normalize_official_match(item)
-            if match:
-                matches[match["id"]] = match
+    def fetch_team_matches(team_id):
+        return api_data(base, f"Match/getMatchTeam/{team_id}")
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(fetch_team_matches, team_id): team_id for team_id in TEAM_CATALOG}
+        for future in as_completed(futures):
+            for item in future.result():
+                match = normalize_official_match(item)
+                if match:
+                    matches[match["id"]] = match
     return list(matches.values())
 
 
