@@ -10,12 +10,12 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 SETTINGS = json.loads((ROOT / "config/settings.json").read_text(encoding="utf-8"))
+CLUBS = json.loads((ROOT / "config/clubs.json").read_text(encoding="utf-8"))
 OUTPUT = ROOT / "docs/calendars"
 CONFIG_URL = (
     "https://dsmulti-fcbq-public.optimalwayconsulting.com/public/app/config"
     "?version=25.10.31&federation=fcbq"
 )
-CLUB_ID = "16"
 HEADERS = {"Accept": "application/json", "User-Agent": "Bàsquet Català/25.10.31"}
 TEAM_CATALOG = {}
 
@@ -33,10 +33,10 @@ def api_data(base, path):
     return payload.get("messageData") or []
 
 
-def team_key(team):
+def team_key(team, club_id):
     category = team.get("idCategory") or team.get("idCategoriesRegistred") or "team"
     code = team.get("teamCode") or "00"
-    return f"{category}-{code}"
+    return f"{club_id}-{category}-{code}"
 
 
 def team_label(team):
@@ -79,13 +79,16 @@ def normalize_official_match(item):
 def fetch_payload():
     config = get_json(CONFIG_URL)
     base = config["CDN_ESB"].rstrip("/")
-    teams = api_data(base, f"Team/getTeamsFromClub/{CLUB_ID}")
-    for team in teams:
-        team_id = str(team["idSignedTeam"])
-        TEAM_CATALOG[team_id] = {
-            "key": team_key(team),
-            "label": team_label(team),
-        }
+    for club in CLUBS:
+        club_id = str(club["id"])
+        teams = api_data(base, f"Team/getTeamsFromClub/{club_id}")
+        for team in teams:
+            team_id = str(team["idSignedTeam"])
+            TEAM_CATALOG[team_id] = {
+                "key": team_key(team, club_id),
+                "label": team_label(team),
+                "club": club["name"],
+            }
 
     matches = {}
     for team_id in TEAM_CATALOG:
@@ -195,16 +198,20 @@ def write_calendar(team_slug, team_name, matches):
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     matches = normalize_payload(fetch_payload())
-    teams = defaultdict(lambda: {"name": "", "matches": []})
+    teams = defaultdict(lambda: {"name": "", "club": "", "matches": []})
 
     for entry in TEAM_CATALOG.values():
         slug = slugify(entry["key"])
         teams[slug]["name"] = entry["label"]
+        teams[slug]["club"] = entry["club"]
 
     for match in matches:
         for team_key_value, team_name in club_sides(match):
             slug = slugify(team_key_value)
             teams[slug]["name"] = team_name
+            catalog = TEAM_CATALOG.get(str(match.get("home_team_id") or "")) or TEAM_CATALOG.get(str(match.get("away_team_id") or ""))
+            if catalog:
+                teams[slug]["club"] = catalog["club"]
             teams[slug]["matches"].append(match)
 
     for old_file in OUTPUT.glob("*.ics"):
@@ -214,7 +221,7 @@ def main():
     index = []
     for slug, team in sorted(teams.items(), key=lambda item: fold(item[1]["name"])):
         write_calendar(slug, team["name"], team["matches"])
-        index.append({"slug": slug, "name": team["name"], "matches": len(team["matches"])})
+        index.append({"slug": slug, "name": team["name"], "club": team["club"], "matches": len(team["matches"])})
 
     (OUTPUT / "index.json").write_text(
         json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
