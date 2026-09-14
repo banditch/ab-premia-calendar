@@ -1,132 +1,224 @@
 [
   {
-    "slug": "29-39",
+    "slug": "16-29-39",
     "name": "AB PREMIÀ BLANC — C.C. JÚNIOR MASCULÍ NIVELL B",
+    "club": "AB Premià",
     "matches": 26
   },
   {
-    "slug": "186-14",
+    "slug": "16-186-14",
     "name": "AB PREMIÀ BLANC — C.T. BCN U15 - CADET MASCULÍ 1R. ANY PROMOCIÓ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "50-37",
+    "slug": "16-50-37",
     "name": "AB PREMIÀ BLANC — C.T. MINI FEMENÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "133-21",
+    "slug": "16-133-21",
     "name": "AB PREMIÀ BLANC — C.T. MINI MASCULÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "136-38",
+    "slug": "16-136-38",
     "name": "AB PREMIÀ BLANC — C.T. PRE-MINI FEMENÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "134-26",
+    "slug": "16-134-26",
     "name": "AB PREMIÀ BLANC — C.T. PRE-MINI MASCULÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "120-04",
+    "slug": "16-120-04",
     "name": "AB PREMIÀ BLAU — C.C. CADET MASCULÍ INTERTERRITORIAL",
+    "club": "AB Premià",
     "matches": 14
   },
   {
-    "slug": "27-09",
+    "slug": "16-27-09",
     "name": "AB PREMIÀ BLAU — C.C. JÚNIOR MASCULÍ INTERTERRITORIAL",
+    "club": "AB Premià",
     "matches": 14
   },
   {
-    "slug": "162-24",
+    "slug": "16-162-24",
     "name": "AB PREMIÀ BLAU — C.C. MINI FEMENÍ INTERTERRITORIAL",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "187-06",
+    "slug": "16-187-06",
     "name": "AB PREMIÀ BLAU — C.T. BCN U13 - INFANTIL MASCULÍ 1R. ANY PROMOCIÓ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "38-15",
+    "slug": "16-38-15",
     "name": "AB PREMIÀ BLAU — C.T. INFANTIL MASCULÍ PROMOCIÓ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "41-05",
+    "slug": "16-41-05",
     "name": "AB PREMIÀ BLAU — C.T. MINI MASCULÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "51-30",
+    "slug": "16-51-30",
     "name": "AB PREMIÀ BLAU — C.T. PRE-MINI FEMENÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "42-20",
+    "slug": "16-42-20",
     "name": "AB PREMIÀ BLAU — C.T. PRE-MINI MASCULÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "185-12",
+    "slug": "16-185-12",
     "name": "AB PREMIÀ NEGRE — C.T. BCN U17 - JÚNIOR MASCULÍ 1R. ANY PROMOCIÓ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "135-27",
+    "slug": "16-135-27",
     "name": "AB PREMIÀ NEGRE — C.T. MINI FEMENÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "133-25",
+    "slug": "16-133-25",
     "name": "AB PREMIÀ NEGRE — C.T. MINI MASCULÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "134-23",
+    "slug": "16-134-23",
     "name": "AB PREMIÀ NEGRE — C.T. PRE-MINI MASCULÍ 1R. ANY",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "25-19",
+    "slug": "16-25-19",
     "name": "AB PREMIÀ — C.C. JÚNIOR FEM. NIVELL A",
+    "club": "AB Premià",
     "matches": 12
   },
   {
-    "slug": "20-08",
+    "slug": "16-20-08",
     "name": "AB PREMIÀ — C.C. SEGONA CATEGORIA FEMENINA",
+    "club": "AB Premià",
     "matches": 26
   },
   {
-    "slug": "10-00",
+    "slug": "16-10-00",
     "name": "AB PREMIÀ — C.C. SEGONA CATEGORIA MASCULINA",
+    "club": "AB Premià",
     "matches": 26
   },
   {
-    "slug": "13-01",
+    "slug": "16-13-01",
     "name": "AB PREMIÀ — C.C. SOTS-25 MASCULÍ NIVELL A",
+    "club": "AB Premià",
     "matches": 24
   },
   {
-    "slug": "46-07",
+    "slug": "16-46-07",
     "name": "AB PREMIÀ — C.T. CADET FEMENÍ PROMOCIÓ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "49-22",
+    "slug": "16-49-22",
     "name": "AB PREMIÀ — C.T. PRE-INFANTIL FEMENÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "40-13",
+    "slug": "16-40-13",
     "name": "AB PREMIÀ — C.T. PRE-INFANTIL MASCULÍ",
+    "club": "AB Premià",
     "matches": 0
   },
   {
-    "slug": "171-10",
+    "slug": "128-15-01",
+    "name": "C.E.THAU A — C.T. SOTS-25 MASCULÍ NIVELL B",
+    "club": "C.E. Thau",
+    "matches": 24
+  },
+  {
+    "slug": "128-15-02",
+    "name": "C.E.THAU B — C.T. SOTS-25 MASCULÍ NIVELL B",
+    "club": "C.E. Thau",
+    "matches": 26
+  },
+  {
+    "slug": "128-22-13",
+    "name": "C.E.THAU — 2A. TERRITORIAL SÈNIOR FEMENÍ",
+    "club": "C.E. Thau",
+    "matches": 26
+  },
+  {
+    "slug": "128-14-03",
+    "name": "C.E.THAU — 3A. TERRITORIAL SÈNIOR MASCULÍ",
+    "club": "C.E. Thau",
+    "matches": 26
+  },
+  {
+    "slug": "128-43-14",
+    "name": "C.E.THAU — C.C. SOTS-25 FEMENÍ",
+    "club": "C.E. Thau",
+    "matches": 20
+  },
+  {
+    "slug": "128-186-04",
+    "name": "C.E.THAU — C.T. BCN U15 - CADET MASCULÍ 1R. ANY PROMOCIÓ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "128-46-00",
+    "name": "C.E.THAU — C.T. CADET FEMENÍ PROMOCIÓ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "128-38-19",
+    "name": "C.E.THAU — C.T. INFANTIL MASCULÍ PROMOCIÓ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "128-45-22",
+    "name": "C.E.THAU — C.T. JÚNIOR FEMENÍ PROMOCIÓ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "128-49-23",
+    "name": "C.E.THAU — C.T. PRE-INFANTIL FEMENÍ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "128-40-08",
+    "name": "C.E.THAU — C.T. PRE-INFANTIL MASCULÍ",
+    "club": "C.E. Thau",
+    "matches": 0
+  },
+  {
+    "slug": "16-171-10",
     "name": "WECOLORS AB PREMIÀ — SUPER COPA FEMENINA",
+    "club": "AB Premià",
     "matches": 30
   }
 ]
