@@ -218,14 +218,25 @@ def main():
             teams[slug]["club"] = club_name
             teams[slug]["matches"].append(match)
 
+    # Preserve the original AB Premià URLs used by existing subscriptions.
+    # New subscriptions use the club-prefixed slugs in index.json.
+    legacy_slugs = {
+        slug.removeprefix("16-"): slug
+        for slug, team in teams.items()
+        if team["club"] == "AB Premià" and slug.startswith("16-")
+    }
+    valid_slugs = set(teams) | set(legacy_slugs)
     for old_file in OUTPUT.glob("*.ics"):
-        if old_file.stem not in teams:
+        if old_file.stem not in valid_slugs:
             old_file.unlink()
 
     index = []
     for slug, team in sorted(teams.items(), key=lambda item: fold(item[1]["name"])):
         write_calendar(slug, team["name"], team["matches"])
         index.append({"slug": slug, "name": team["name"], "club": team["club"], "matches": len(team["matches"])})
+    for legacy_slug, current_slug in legacy_slugs.items():
+        team = teams[current_slug]
+        write_calendar(legacy_slug, team["name"], team["matches"])
 
     (OUTPUT / "index.json").write_text(
         json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
